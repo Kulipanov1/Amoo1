@@ -8,6 +8,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useUserStore } from "@/store/useUserStore";
 import { useMatchStore } from "@/store/useMatchStore";
 import TelegramWebAppProvider from "@/components/TelegramWebAppProvider";
+import './styles.css';
 
 export const unstable_settings = {
   // Ensure any route can link back to `/`
@@ -61,7 +62,18 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   return (
-    <Stack>
+    <Stack
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#f5f5f5',
+        },
+        headerShadowVisible: false,
+        headerBackTitleVisible: false,
+        contentStyle: {
+          backgroundColor: '#ffffff',
+        },
+      }}
+    >
       <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen 
