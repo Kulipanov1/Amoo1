@@ -1,10 +1,11 @@
 import React from 'react';
 import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
 import { useAppStore } from '../store/useAppStore';
-import { theme } from '../constants/theme';
+import { getThemeColors, ThemeMode, getColor } from '../constants/theme';
 
 export const LanguageSelector = () => {
   const { language, setLanguage, theme: currentTheme } = useAppStore();
+  const themeColors = getThemeColors(currentTheme as ThemeMode);
 
   const toggleLanguage = () => {
     setLanguage(language === 'en' ? 'ru' : 'en');
@@ -20,12 +21,12 @@ export const LanguageSelector = () => {
     button: {
       padding: 8,
       borderRadius: 8,
-      backgroundColor: theme[currentTheme].containerBg,
+      backgroundColor: getColor(themeColors, 'containerBg'),
     },
     text: {
       fontSize: 14,
       fontWeight: '600',
-      color: theme[currentTheme].textColor,
+      color: getColor(themeColors, 'textColor'),
     },
   });
 
