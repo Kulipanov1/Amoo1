@@ -32,7 +32,8 @@ body {
   min-height: 100vh;
   justify-content: center;
   background-color: var(--background-color);
-  padding: 0 16px;
+  padding: 16px;
+  position: relative;
 }
 
 .content-container {
@@ -43,22 +44,31 @@ body {
   position: relative;
   overflow-y: auto;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding-top: 60px; /* Add space for fixed widgets */
 }
 
 /* Language selector */
 .language-selector {
   position: fixed;
-  top: 16px;
-  right: 16px;
+  top: 32px;
+  right: calc(50% - 220px); /* Adjust based on container width */
   z-index: 1000;
+  background-color: var(--container-bg);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Theme toggle */
 .theme-toggle {
   position: fixed;
-  top: 16px;
-  left: 16px;
+  top: 32px;
+  left: calc(50% - 220px); /* Adjust based on container width */
   z-index: 1000;
+  background-color: var(--container-bg);
+  border-radius: 8px;
+  padding: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Media queries */
@@ -68,12 +78,16 @@ body {
   }
   
   .content-container {
+    border-radius: 0;
     box-shadow: none;
   }
 
-  .language-selector,
+  .language-selector {
+    right: 16px;
+  }
+
   .theme-toggle {
-    position: absolute;
+    left: 16px;
   }
 }
 
