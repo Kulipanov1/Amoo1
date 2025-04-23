@@ -6,7 +6,7 @@
     "start": "expo start --tunnel",
     "start-web": "expo start --web --tunnel",
     "start-web-dev": "DEBUG=expo* expo start --web --tunnel",
-    "build": "expo export -p web",
+    "build": "npx expo export -p web",
     "serve": "npx serve web-build",
     "deploy": "npx expo export:web"
   },
