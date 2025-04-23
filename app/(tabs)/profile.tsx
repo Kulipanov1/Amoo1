@@ -15,11 +15,15 @@ import {
   LogOut,
   ChevronRight
 } from 'lucide-react-native';
+import { useTranslation } from '@/hooks/useTranslation';
+import { useAppStore } from '@/store/useAppStore';
 
 export default function ProfileScreen() {
   const router = useRouter();
   const { currentUser, setOnboarded } = useUserStore();
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+  const { t } = useTranslation();
+  const { theme } = useAppStore();
   
   const handleLogout = () => {
     Alert.alert(
@@ -71,24 +75,24 @@ export default function ProfileScreen() {
             </TouchableOpacity>
           </View>
           
-          <Text style={styles.name}>{userProfile.name}, {userProfile.age}</Text>
-          <Text style={styles.location}>{userProfile.location}</Text>
+          <Text style={[styles.name, { color: 'var(--text-color)' }]}>{userProfile.name}, {userProfile.age}</Text>
+          <Text style={[styles.location, { color: 'var(--text-color)' }]}>{userProfile.location}</Text>
           
           <TouchableOpacity style={styles.editProfileButton}>
-            <Text style={styles.editProfileText}>Edit Profile</Text>
+            <Text style={[styles.editProfileText, { color: 'var(--text-color)' }]}>{t('profile.edit')}</Text>
           </TouchableOpacity>
         </View>
         
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Settings</Text>
+          <Text style={[styles.sectionTitle, { color: 'var(--text-color)' }]}>{t('profile.settings')}</Text>
           
           <TouchableOpacity style={styles.settingItem}>
             <View style={styles.settingIconContainer}>
               <MapPin size={20} color={Colors.primary} />
             </View>
             <View style={styles.settingContent}>
-              <Text style={styles.settingLabel}>Location</Text>
-              <Text style={styles.settingValue}>{userProfile.location}</Text>
+              <Text style={[styles.settingLabel, { color: 'var(--text-color)' }]}>{t('profile.location')}</Text>
+              <Text style={[styles.settingValue, { color: 'var(--text-color)' }]}>{userProfile.location}</Text>
             </View>
             <ChevronRight size={20} color={Colors.subtext} />
           </TouchableOpacity>
@@ -98,8 +102,8 @@ export default function ProfileScreen() {
               <Heart size={20} color={Colors.primary} />
             </View>
             <View style={styles.settingContent}>
-              <Text style={styles.settingLabel}>Discovery Preferences</Text>
-              <Text style={styles.settingValue}>
+              <Text style={[styles.settingLabel, { color: 'var(--text-color)' }]}>{t('profile.discoveryPreferences')}</Text>
+              <Text style={[styles.settingValue, { color: 'var(--text-color)' }]}>
                 {userProfile.lookingFor.join(', ')}, {userProfile.ageRange[0]}-{userProfile.ageRange[1]} years
               </Text>
             </View>
@@ -111,7 +115,7 @@ export default function ProfileScreen() {
               <Bell size={20} color={Colors.primary} />
             </View>
             <View style={styles.settingContent}>
-              <Text style={styles.settingLabel}>Notifications</Text>
+              <Text style={[styles.settingLabel, { color: 'var(--text-color)' }]}>{t('profile.notifications')}</Text>
             </View>
             <Switch
               value={notificationsEnabled}
@@ -123,14 +127,14 @@ export default function ProfileScreen() {
         </View>
         
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Support</Text>
+          <Text style={[styles.sectionTitle, { color: 'var(--text-color)' }]}>{t('profile.support')}</Text>
           
           <TouchableOpacity style={styles.settingItem}>
             <View style={styles.settingIconContainer}>
               <Shield size={20} color={Colors.primary} />
             </View>
             <View style={styles.settingContent}>
-              <Text style={styles.settingLabel}>Privacy Policy</Text>
+              <Text style={[styles.settingLabel, { color: 'var(--text-color)' }]}>{t('profile.privacyPolicy')}</Text>
             </View>
             <ChevronRight size={20} color={Colors.subtext} />
           </TouchableOpacity>
@@ -140,7 +144,7 @@ export default function ProfileScreen() {
               <HelpCircle size={20} color={Colors.primary} />
             </View>
             <View style={styles.settingContent}>
-              <Text style={styles.settingLabel}>Help & Support</Text>
+              <Text style={[styles.settingLabel, { color: 'var(--text-color)' }]}>{t('profile.helpSupport')}</Text>
             </View>
             <ChevronRight size={20} color={Colors.subtext} />
           </TouchableOpacity>
@@ -150,7 +154,7 @@ export default function ProfileScreen() {
               <Settings size={20} color={Colors.primary} />
             </View>
             <View style={styles.settingContent}>
-              <Text style={styles.settingLabel}>Account Settings</Text>
+              <Text style={[styles.settingLabel, { color: 'var(--text-color)' }]}>{t('profile.accountSettings')}</Text>
             </View>
             <ChevronRight size={20} color={Colors.subtext} />
           </TouchableOpacity>
@@ -158,11 +162,11 @@ export default function ProfileScreen() {
         
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
           <LogOut size={20} color={Colors.error} style={styles.logoutIcon} />
-          <Text style={styles.logoutText}>Log Out</Text>
+          <Text style={[styles.logoutText, { color: 'var(--text-color)' }]}>{t('profile.logout')}</Text>
         </TouchableOpacity>
         
         <View style={styles.versionContainer}>
-          <Text style={styles.versionText}>Amoo v1.0.0</Text>
+          <Text style={[styles.versionText, { color: 'var(--text-color)' }]}>Amoo v1.0.0</Text>
         </View>
       </ScrollView>
     </SafeAreaView>

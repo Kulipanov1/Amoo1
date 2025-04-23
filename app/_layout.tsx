@@ -7,6 +7,9 @@ import { ErrorBoundary } from "./error-boundary";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useUserStore } from "@/store/useUserStore";
 import { useMatchStore } from "@/store/useMatchStore";
+import { useAppStore } from "@/store/useAppStore";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { LanguageSelector } from "@/components/LanguageSelector";
 import TelegramWebAppProvider from "@/components/TelegramWebAppProvider";
 import './styles.css';
 
@@ -26,6 +29,7 @@ export default function RootLayout() {
   // Initialize stores
   const { loadMatches } = useMatchStore();
   const { getNextPotentialMatches } = useUserStore();
+  const { theme } = useAppStore();
 
   useEffect(() => {
     // Load initial data
@@ -45,6 +49,10 @@ export default function RootLayout() {
     }
   }, [loaded]);
 
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
+
   if (!loaded) {
     return null;
   }
@@ -53,7 +61,13 @@ export default function RootLayout() {
     <ErrorBoundary>
       <TelegramWebAppProvider>
         <SafeAreaProvider>
-          <RootLayoutNav />
+          <div className="app-container">
+            <div className="content-container scrollable">
+              <ThemeToggle />
+              <LanguageSelector />
+              <RootLayoutNav />
+            </div>
+          </div>
         </SafeAreaProvider>
       </TelegramWebAppProvider>
     </ErrorBoundary>
@@ -65,12 +79,12 @@ function RootLayoutNav() {
     <Stack
       screenOptions={{
         headerStyle: {
-          backgroundColor: '#f5f5f5',
+          backgroundColor: 'var(--background-color)',
         },
         headerShadowVisible: false,
         headerBackTitleVisible: false,
         contentStyle: {
-          backgroundColor: '#ffffff',
+          backgroundColor: 'var(--container-bg)',
         },
       }}
     >
