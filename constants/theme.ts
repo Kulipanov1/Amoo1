@@ -53,4 +53,19 @@ if (Platform.OS === 'web') {
     const newTheme: ThemeMode = e.matches ? 'dark' : 'light';
     updateWebTheme(newTheme);
   });
-} 
+}
+
+export const theme = {
+  light: {
+    '--background-color': '#f5f5f5',
+    '--container-bg': '#ffffff',
+    '--text-color': '#000000',
+    '--border-color': '#e0e0e0',
+  },
+  dark: {
+    '--background-color': '#1a1a1a',
+    '--container-bg': '#2d2d2d',
+    '--text-color': '#ffffff',
+    '--border-color': '#404040',
+  },
+} as const; 

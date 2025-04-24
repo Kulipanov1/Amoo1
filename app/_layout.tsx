@@ -2,7 +2,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
 import { Stack, SplashScreen } from "expo-router";
 import { useEffect } from "react";
-import { Platform, View, StyleSheet } from "react-native";
+import { Platform } from "react-native";
 import { ErrorBoundary } from "./error-boundary";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useUserStore } from "@/store/useUserStore";
@@ -11,7 +11,6 @@ import { useAppStore } from "@/store/useAppStore";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import TelegramWebAppProvider from "@/components/TelegramWebAppProvider";
-import { getThemeColors } from "@/constants/theme";
 import './styles.css';
 
 export const unstable_settings = {
@@ -30,8 +29,7 @@ export default function RootLayout() {
   // Initialize stores
   const { loadMatches } = useMatchStore();
   const { getNextPotentialMatches } = useUserStore();
-  const { theme: currentTheme } = useAppStore();
-  const themeColors = getThemeColors(currentTheme);
+  const { theme } = useAppStore();
 
   useEffect(() => {
     // Load initial data
@@ -53,54 +51,25 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (Platform.OS === 'web') {
-      document.documentElement.setAttribute('data-theme', currentTheme);
+      document.documentElement.setAttribute('data-theme', theme);
     }
-  }, [currentTheme]);
+  }, [theme]);
 
   if (!loaded) {
     return null;
-  }
-
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: themeColors.backgroundColor,
-    },
-    content: {
-      flex: 1,
-      backgroundColor: themeColors.containerBg,
-    },
-  });
-
-  if (Platform.OS === 'web') {
-    return (
-      <ErrorBoundary>
-        <TelegramWebAppProvider>
-          <SafeAreaProvider>
-            <div className="app-container">
-              <div className="content-container scrollable">
-                <ThemeToggle />
-                <LanguageSelector />
-                <RootLayoutNav />
-              </div>
-            </div>
-          </SafeAreaProvider>
-        </TelegramWebAppProvider>
-      </ErrorBoundary>
-    );
   }
 
   return (
     <ErrorBoundary>
       <TelegramWebAppProvider>
         <SafeAreaProvider>
-          <View style={styles.container}>
-            <View style={styles.content}>
+          <div className="app-container">
+            <div className="content-container scrollable">
               <ThemeToggle />
               <LanguageSelector />
               <RootLayoutNav />
-            </View>
-          </View>
+            </div>
+          </div>
         </SafeAreaProvider>
       </TelegramWebAppProvider>
     </ErrorBoundary>
@@ -108,19 +77,15 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  const { theme: currentTheme } = useAppStore();
-  const themeColors = getThemeColors(currentTheme);
-
   return (
     <Stack
       screenOptions={{
         headerStyle: {
-          backgroundColor: themeColors.backgroundColor,
+          backgroundColor: 'var(--background-color)',
         },
         headerShadowVisible: false,
-        headerTintColor: themeColors.textColor,
         contentStyle: {
-          backgroundColor: themeColors.containerBg,
+          backgroundColor: 'var(--container-bg)',
         },
       }}
     >
