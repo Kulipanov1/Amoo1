@@ -11,7 +11,7 @@ import { useAppStore } from "@/store/useAppStore";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import TelegramWebAppProvider from "@/components/TelegramWebAppProvider";
-import { getThemeColors, ThemeMode, getColor } from "@/constants/theme";
+import { getThemeColors } from "@/constants/theme";
 import './styles.css';
 
 export const unstable_settings = {
@@ -31,7 +31,7 @@ export default function RootLayout() {
   const { loadMatches } = useMatchStore();
   const { getNextPotentialMatches } = useUserStore();
   const { theme: currentTheme } = useAppStore();
-  const themeColors = getThemeColors(currentTheme as ThemeMode);
+  const themeColors = getThemeColors(currentTheme);
 
   useEffect(() => {
     // Load initial data
@@ -64,11 +64,11 @@ export default function RootLayout() {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: getColor(themeColors, 'backgroundColor'),
+      backgroundColor: themeColors.backgroundColor,
     },
     content: {
       flex: 1,
-      backgroundColor: getColor(themeColors, 'containerBg'),
+      backgroundColor: themeColors.containerBg,
     },
   });
 
@@ -109,18 +109,18 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const { theme: currentTheme } = useAppStore();
-  const themeColors = getThemeColors(currentTheme as ThemeMode);
+  const themeColors = getThemeColors(currentTheme);
 
   return (
     <Stack
       screenOptions={{
         headerStyle: {
-          backgroundColor: getColor(themeColors, 'backgroundColor'),
+          backgroundColor: themeColors.backgroundColor,
         },
         headerShadowVisible: false,
-        headerTintColor: getColor(themeColors, 'textColor'),
+        headerTintColor: themeColors.textColor,
         contentStyle: {
-          backgroundColor: getColor(themeColors, 'containerBg'),
+          backgroundColor: themeColors.containerBg,
         },
       }}
     >

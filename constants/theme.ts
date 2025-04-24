@@ -33,14 +33,24 @@ export const getColor = (theme: ThemeColors, key: keyof ThemeColors): string => 
 
 // For web CSS variables
 if (Platform.OS === 'web') {
-  const root = document.documentElement;
-  const setCSSVariables = (theme: ThemeColors) => {
-    root.style.setProperty('--background-color', theme.backgroundColor);
-    root.style.setProperty('--container-bg', theme.containerBg);
-    root.style.setProperty('--text-color', theme.textColor);
-    root.style.setProperty('--border-color', theme.borderColor);
+  const updateWebTheme = (theme: ThemeMode) => {
+    const themeColors = getThemeColors(theme);
+    const root = document.documentElement;
+    root.style.setProperty('--background-color', themeColors.backgroundColor);
+    root.style.setProperty('--container-bg', themeColors.containerBg);
+    root.style.setProperty('--text-color', themeColors.textColor);
+    root.style.setProperty('--border-color', themeColors.borderColor);
+    root.setAttribute('data-theme', theme);
   };
 
-  // Set initial theme
-  setCSSVariables(lightTheme);
+  // Set initial theme based on system preference
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const initialTheme: ThemeMode = prefersDark ? 'dark' : 'light';
+  updateWebTheme(initialTheme);
+
+  // Listen for system theme changes
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    const newTheme: ThemeMode = e.matches ? 'dark' : 'light';
+    updateWebTheme(newTheme);
+  });
 } 
