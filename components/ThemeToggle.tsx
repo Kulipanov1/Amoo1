@@ -19,14 +19,26 @@ export const ThemeToggle = () => {
   const styles = StyleSheet.create({
     container: {
       position: 'absolute',
-      top: 32,
+      top: Platform.OS === 'ios' ? 60 : 32,
       left: 16,
       zIndex: 1000,
+      elevation: 5,
     },
     button: {
       padding: 8,
       borderRadius: 8,
       backgroundColor: getColor(themeColors, 'containerBg'),
+      ...Platform.select({
+        ios: {
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.25,
+          shadowRadius: 3.84,
+        },
+        android: {
+          elevation: 5,
+        },
+      }),
     },
   });
 
